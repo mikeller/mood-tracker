@@ -11,11 +11,15 @@ services:
   service:
     build:
       context: service
+      #environment:
+      #- JPDA_ADDRESS=8083
+      #- JPDA_TRANSPORT=dt_socket
     restart: on-failure
     networks:
       - internal
     ports:
       - 8082:8080
+      - 8083:8083
 
 networks:
   internal: {}
