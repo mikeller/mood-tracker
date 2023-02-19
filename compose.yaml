@@ -2,6 +2,20 @@ services:
   ui:
     build:
       context: ui
-    restart: always
+    restart: on-failure
+    depends_on:
+      - service
     ports:
       - 80:80
+
+  service:
+    build:
+      context: service
+    restart: on-failure
+    networks:
+      - internal
+    ports:
+      - 8082:8080
+
+networks:
+  internal: {}
