@@ -31,7 +31,7 @@ public class MoodTrackerController {
 		return "home";
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String user(@Validated User user, Model model) {
 		System.out.println("User Page Requested");
 		model.addAttribute("userName", user.getUserName());
