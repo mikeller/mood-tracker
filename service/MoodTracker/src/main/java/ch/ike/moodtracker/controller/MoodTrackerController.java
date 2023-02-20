@@ -1,40 +1,74 @@
 package ch.ike.moodtracker.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Enumeration;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import ch.ike.moodtracker.model.User;
+import ch.ike.moodtracker.component.AllMoodResponse;
+import ch.ike.moodtracker.component.Mood;
+import ch.ike.moodtracker.component.PersonalToken;
+import ch.ike.moodtracker.component.Response;
+import ch.ike.moodtracker.service.MoodServiceImpl;
+import ch.ike.moodtracker.service.MoodServiceImpl.MoodAlreadySubmittedException;
+import ch.ike.moodtracker.service.MoodServiceImpl.MoodNotYetSubmittedException;
 
-@Controller
+
+
+@CrossOrigin(origins = "http://localhost, http://localhost:4200")
+@RestController
 public class MoodTrackerController {
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		System.out.println("Home Page Requested, locale = " + locale);
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+	@Autowired
+	MoodServiceImpl moodService;
+	
+	@RequestMapping(value = "/moods", method = RequestMethod.GET)
+	public Response getAllMoods(PersonalToken token) {
+		checkTokenValid(token);
 
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "home";
+		Enumeration<Mood> allMoods;
+		try {
+			allMoods =  moodService.getAllMoods(token);
+		} catch (MoodNotYetSubmittedException e) {
+			Response response = new Response();
+			response.setStatus(403);
+			response.setText("Mood not yet submitted");
+			return response;
+		}
+		
+		AllMoodResponse response = new AllMoodResponse();
+		response.setStatus(200);
+		response.setText("Ok");
+		response.setMoods(allMoods);
+		return response;
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String user(@Validated User user, Model model) {
-		System.out.println("User Page Requested");
-		model.addAttribute("userName", user.getUserName());
-		return "user";
+	@RequestMapping(value = "/mood/{token}", method = RequestMethod.POST)
+	public Response setPersonalMood(PersonalToken token, @RequestBody Mood mood) {
+		checkTokenValid(token);
+
+		try {
+			moodService.setPersonalMood(token, mood);
+		} catch (MoodAlreadySubmittedException e) {
+			Response response = new Response();
+			response.setStatus(409);
+			response.setText("Mood already submitted");
+			return response;
+		}
+		
+		Response response = new Response();
+		response.setStatus(200);
+		response.setText("Ok");
+		return response;
+	}
+
+	private void checkTokenValid(PersonalToken token) {
+		if (token == null || token.getToken() == null || token.getToken().isEmpty()) {
+			throw new IllegalArgumentException("Token cannot be empty");
+		}
 	}
 }

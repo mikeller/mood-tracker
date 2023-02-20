@@ -13,7 +13,8 @@ export class AppComponent {
   myresponse: any;
 
   // Url to fetch the employee records from the spring application.
-  readonly APP_URL = 'http://localhost:8082/MoodTracker';
+  //readonly APP_URL = 'http://localhost:8082/moodtracker/getemployees';
+  readonly APP_URL = 'http://localhost:8080/moodtracker';
 
   constructor(private _http: HttpClient) { }
 

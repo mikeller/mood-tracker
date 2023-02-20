@@ -6,6 +6,4 @@ COPY MoodTracker/src /opt/app/src
 RUN mvn clean package
 
 FROM tomcat:9
-ENV JPDA_ADDRESS=8083
-ENV JPDA_TRANSPORT=dt_socket
-COPY --from=build /opt/app/target/MoodTracker.war /usr/local/tomcat/webapps/
+COPY --from=build /opt/app/target/ROOT.war /usr/local/tomcat/webapps/
