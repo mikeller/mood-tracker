@@ -3,14 +3,36 @@
   <hr />
 
   <div *ngIf="!moodResults">
-    <div><small class="text-info">Mood entry form</small></div>
+    <div>
+      <tr *ngFor="let moodValue of moodValues | keyvalue: asIsOrder">
+        <td>{{ moodValue.value }}</td>
+        <td>
+          <input type="radio" name="radiogroup" 
+            [value]="moodValue.key" 
+            (change)="onMoodSelectionChange(moodValue.key)">
+        </td>
+      </tr>
+    </div>
 
-    <div id="submitbtn">
+    <div><small class="text-info">Comment:</small></div>
+    <div>
+      <textarea
+        [value]="commentInput"
+        (input)="onCommentChange($event)"
+        rows=5
+        cols=80></textarea>
+    </div>
+
+    <div *ngIf="moodInput" id="submitbtn">
       <button type="button" class="btn btn-outline-success" (click)="submitMood();">Submit</button>
     </div>
   </div>
 
   <div *ngIf="moodResults">
+    <div *ngIf="getDevMode()" id="submitbtn">
+     <button type="button" class="btn btn-outline-success" (click)="reset();">Reset</button>
+    </div>
+
     <div><small class="text-info">Date: {{moodResults.date}}</small></div>
     <div><small class="text-info">Summary:</small></div>
     <table class="table table-bordered table-hover">
@@ -19,15 +41,15 @@
         <th>Count</th>
       </thead>
       <tbody>
-        <tr *ngFor="let mood of moodResults.moods | keyvalue">
-          <td>{{mood.key}}</td>
+        <tr *ngFor="let mood of moodResults.moods | keyvalue: asIsOrder">
+          <td>{{moodValues.get(mood.key)}}</td>
           <td>{{mood.value}}</td>
         </tr>
       </tbody>
     </table>
     <div><small class="text-info">Comments:</small></div>
-    <tr *ngFor="let verbatim of moodResults.verbatims | keyvalue">
-      <div><small class="text-info">Mood: {{verbatim.key}}</small></div>
+    <tr *ngFor="let verbatim of moodResults.verbatims | keyvalue: asIsOrder">
+      <div><small class="text-info">Mood: {{moodValues.get(verbatim.key)}}</small></div>
       <table class="table table-bordered table-hover">
         <thead>
           <th>Comment</th>

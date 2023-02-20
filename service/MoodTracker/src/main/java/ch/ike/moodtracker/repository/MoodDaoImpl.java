@@ -1,6 +1,8 @@
 package ch.ike.moodtracker.repository;
 
-import java.util.Enumeration;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Repository;
@@ -26,10 +28,10 @@ public class MoodDaoImpl {
 		System.out.println("db: " + LogHelper.toJson(db));	    
 	}
 	
-	public Enumeration<Mood> getAllMoodsForToday() {
+	public Collection<Mood> getAllMoodsForDay(Date date) {
 		System.out.println("db: " + LogHelper.toJson(db));
 	    
-		return db.elements();		
+		return Collections.list(db.elements());		
 	}
 
 }

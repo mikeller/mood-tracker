@@ -1,17 +1,15 @@
 package ch.ike.moodtracker.component;
 
-import java.util.Enumeration;
-
 public class AllMoodResponse extends Response {
 	
-	Enumeration<Mood> moods;
+	MoodDataSet moodDataSet;
 
-	public Enumeration<Mood> getMoods() {
-		return moods;
+	public MoodDataSet getMoodDataSet() {
+		return moodDataSet;
 	}
 
-	public void setMoods(Enumeration<Mood> moods) {
-		this.moods = moods;
+	public void setMoodDataSet(MoodDataSet moodDataSet) {
+		this.moodDataSet = moodDataSet;
 	}
 
 }

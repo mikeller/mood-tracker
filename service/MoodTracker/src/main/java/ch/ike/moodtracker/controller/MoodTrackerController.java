@@ -1,7 +1,5 @@
 package ch.ike.moodtracker.controller;
 
-import java.util.Enumeration;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.ike.moodtracker.component.AllMoodResponse;
 import ch.ike.moodtracker.component.Mood;
+import ch.ike.moodtracker.component.MoodDataSet;
+import ch.ike.moodtracker.component.MoodValuesResponse;
 import ch.ike.moodtracker.component.PersonalToken;
 import ch.ike.moodtracker.component.Response;
 import ch.ike.moodtracker.service.MoodServiceImpl;
@@ -18,8 +18,7 @@ import ch.ike.moodtracker.service.MoodServiceImpl.MoodAlreadySubmittedException;
 import ch.ike.moodtracker.service.MoodServiceImpl.MoodNotYetSubmittedException;
 
 
-
-//@CrossOrigin(origins = "http://localhost, http://localhost:4200")
+@CrossOrigin(origins = { "http://localhost", "http://localhost:4200" })
 @RestController
 public class MoodTrackerController {
 
@@ -30,7 +29,7 @@ public class MoodTrackerController {
 	public Response getAllMoods(PersonalToken token) {
 		checkTokenValid(token);
 
-		Enumeration<Mood> allMoods;
+		MoodDataSet allMoods;
 		try {
 			allMoods =  moodService.getAllMoods(token);
 		} catch (MoodNotYetSubmittedException e) {
@@ -43,7 +42,7 @@ public class MoodTrackerController {
 		AllMoodResponse response = new AllMoodResponse();
 		response.setStatus(200);
 		response.setStatusText("Ok");
-		response.setMoods(allMoods);
+		response.setMoodDataSet(allMoods);
 		return response;
 	}
 
@@ -66,6 +65,15 @@ public class MoodTrackerController {
 		Response response = new Response();
 		response.setStatus(200);
 		response.setStatusText("Ok");
+		return response;
+	}
+
+	@RequestMapping(value = "/moodvalues", method = RequestMethod.GET)
+	public MoodValuesResponse getMoodValues() {
+		MoodValuesResponse response = new MoodValuesResponse();
+		response.setStatus(200);
+		response.setStatusText("Ok");
+		response.setMoodValues(moodService.getMoodValues());
 		return response;
 	}
 
