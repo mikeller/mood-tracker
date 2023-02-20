@@ -6,7 +6,9 @@ public class MoodValue {
 		GRUMPY(1, "Grumpy"),
 		MEH(2, "A bit “meh”"),
 		NORMAL(3, "Just normal really"),
-		HAPPY(5, "Happy");
+		HAPPY(5, "Happy"),
+		
+		UNKNOWN(9999, "");
 				
 	    private final int value;
 	    private final String feeling;
@@ -23,6 +25,16 @@ public class MoodValue {
 	    	this.value = value;
 	    	this.feeling = feeling;
 	    }
+		
+		public static Moods getByValue(int value) {
+		    for(Moods mood: values()) {
+		    	if (mood.value == value) {
+		    		return mood;
+		    	}
+		    }
+		    
+		    return UNKNOWN;
+		}
 	}
 
 	String name;

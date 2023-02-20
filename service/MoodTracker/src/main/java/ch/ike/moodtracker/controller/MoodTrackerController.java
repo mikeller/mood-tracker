@@ -13,7 +13,7 @@ import ch.ike.moodtracker.component.MoodDataSet;
 import ch.ike.moodtracker.component.MoodValuesResponse;
 import ch.ike.moodtracker.component.PersonalToken;
 import ch.ike.moodtracker.component.Response;
-import ch.ike.moodtracker.service.MoodServiceImpl;
+import ch.ike.moodtracker.service.MoodService;
 import ch.ike.moodtracker.service.MoodServiceImpl.MoodAlreadySubmittedException;
 import ch.ike.moodtracker.service.MoodServiceImpl.MoodNotYetSubmittedException;
 
@@ -23,7 +23,7 @@ import ch.ike.moodtracker.service.MoodServiceImpl.MoodNotYetSubmittedException;
 public class MoodTrackerController {
 
 	@Autowired
-	MoodServiceImpl moodService;
+	MoodService moodService;
 	
 	@RequestMapping(value = "/moods", method = RequestMethod.GET)
 	public Response getAllMoods(PersonalToken token) {
@@ -78,8 +78,8 @@ public class MoodTrackerController {
 	}
 
 	private void checkTokenValid(PersonalToken token) {
-		if (token == null || token.getToken() == null || token.getToken().isEmpty()) {
-			throw new IllegalArgumentException("Token cannot be empty");
+		if (token == null || token.getToken() == null || token.getToken().isEmpty() || token.getToken().length() > 36) {
+			throw new IllegalArgumentException("Invalid token");
 		}
 	}
 }
