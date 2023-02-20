@@ -19,7 +19,7 @@ import ch.ike.moodtracker.service.MoodServiceImpl.MoodNotYetSubmittedException;
 
 
 
-@CrossOrigin(origins = "http://localhost, http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost, http://localhost:4200")
 @RestController
 public class MoodTrackerController {
 
@@ -36,13 +36,13 @@ public class MoodTrackerController {
 		} catch (MoodNotYetSubmittedException e) {
 			Response response = new Response();
 			response.setStatus(403);
-			response.setText("Mood not yet submitted");
+			response.setStatusText("Mood not yet submitted");
 			return response;
 		}
 		
 		AllMoodResponse response = new AllMoodResponse();
 		response.setStatus(200);
-		response.setText("Ok");
+		response.setStatusText("Ok");
 		response.setMoods(allMoods);
 		return response;
 	}
@@ -50,19 +50,22 @@ public class MoodTrackerController {
 	@RequestMapping(value = "/mood/{token}", method = RequestMethod.POST)
 	public Response setPersonalMood(PersonalToken token, @RequestBody Mood mood) {
 		checkTokenValid(token);
+		if (mood != null && mood.getComment() != null && mood.getComment().length() > 350) {
+			throw new IllegalArgumentException(String.format("Comment too long: %d", mood.getComment().length()));
+		}
 
 		try {
 			moodService.setPersonalMood(token, mood);
 		} catch (MoodAlreadySubmittedException e) {
 			Response response = new Response();
 			response.setStatus(409);
-			response.setText("Mood already submitted");
+			response.setStatusText("Mood already submitted");
 			return response;
 		}
 		
 		Response response = new Response();
 		response.setStatus(200);
-		response.setText("Ok");
+		response.setStatusText("Ok");
 		return response;
 	}
 

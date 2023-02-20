@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class Response {
 	
 	int status;
-	String text;
+	String statusText;
 
 	public int getStatus() {
 		return status;
@@ -16,11 +16,11 @@ public class Response {
 		this.status = status;
 	}
 
-	public String getText() {
-		return text;
+	public String getStatusText() {
+		return statusText;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
 	}
 }

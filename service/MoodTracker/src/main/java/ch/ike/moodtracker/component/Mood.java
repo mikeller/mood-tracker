@@ -29,7 +29,7 @@ public class Mood {
 	}
 	
 	Moods mood;
-	String verbatim;
+	String comment;
 	
 	public Moods getMood() {
 		return mood;
@@ -37,10 +37,10 @@ public class Mood {
 	public void setMood(Moods mood) {
 		this.mood = mood;
 	}
-	public String getVerbatim() {
-		return verbatim;
+	public String getComment() {
+		return comment;
 	}
-	public void setVerbatim(String verbatim) {
-		this.verbatim = verbatim;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

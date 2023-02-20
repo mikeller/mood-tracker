@@ -2,29 +2,41 @@
   <h1 class="text-danger text-center">Welcome to {{ title }}!</h1>
   <hr />
 
-  <div id="fetchbtn">
-    <button type="button" class="btn btn-outline-success" (click)="getAllEmployees();">Click me</button>
-  </div>
-  <div><small class="text-info">Click the button to fetch the employees from the database!</small></div>
+  <div *ngIf="!moodResults">
+    <div><small class="text-info">Mood entry form</small></div>
 
-  <div *ngIf="myresponse">
+    <div id="submitbtn">
+      <button type="button" class="btn btn-outline-success" (click)="submitMood();">Submit</button>
+    </div>
+  </div>
+
+  <div *ngIf="moodResults">
+    <div><small class="text-info">Date: {{moodResults.date}}</small></div>
+    <div><small class="text-info">Summary:</small></div>
     <table class="table table-bordered table-hover">
       <thead>
-        <th>Employee Id</th>
-        <th>Name</th>
-        <th>Phone no.</th>
-        <th>Address</th>
-        <th>Company Logo</th>
+        <th>Mood</th>
+        <th>Count</th>
       </thead>
       <tbody>
-        <tr *ngFor="let employee of myresponse">
-          <td>{{employee.id}}</td>
-          <td>{{employee.name}}</td>
-          <td>{{employee.mobile}}</td>
-          <td>{{employee.address}}</td>
-          <td><img src="{{employee.companylogo}}" alt="Company logo" class="img-thumbnail mx-auto d-block" style="width: 30%" /></td>
+        <tr *ngFor="let mood of moodResults.moods | keyvalue">
+          <td>{{mood.key}}</td>
+          <td>{{mood.value}}</td>
         </tr>
       </tbody>
     </table>
+    <div><small class="text-info">Comments:</small></div>
+    <tr *ngFor="let verbatim of moodResults.verbatims | keyvalue">
+      <div><small class="text-info">Mood: {{verbatim.key}}</small></div>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <th>Comment</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let comment of toArray(verbatim.value)">
+            <td>{{comment}}</td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </div>
