@@ -28,11 +28,21 @@
     </div>
   </div>
 
+  <div *ngIf="hasAlreadySubmitted">
+    <div><small class="text-info">Sorry, you have already submitted your response for
+      today, try again tomorrow!</small></div>
+  </div>
+
+  <div *ngIf="hasSubmitted">
+    <div><small class="text-info">Your submission has been recorded, thank you!</small></div>
+  </div>
+
   <div *ngIf="moodResults">
-    <div *ngIf="getDevMode()" id="submitbtn">
+    <div *ngIf="getDevMode()" id="resetbtn">
      <button type="button" class="btn btn-outline-success" (click)="reset();">Reset</button>
     </div>
 
+    <div><small class="text-info">Overall Team Mood</small></div>
     <div><small class="text-info">Date: {{moodResults.date}}</small></div>
     <div><small class="text-info">Summary:</small></div>
     <table class="table table-bordered table-hover">

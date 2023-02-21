@@ -6,6 +6,7 @@ import { isDevMode } from '@angular/core';
 
 import { MoodResults, MoodValues } from './app.types.';
 import { formatDate } from '@angular/common';
+import { delay, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
   title = 'Mood Tracker';
 
   readonly APP_URL = 'http://localhost:8082/';
-  readonly DEBUG_APP_URL = 'http://localhost:8080/moodtracker/';
+  readonly DEBUG_APP_URL = 'http://localhost:8080/';
   readonly COOKIE_NAME: string = 'MoodTrackerPersonalToken';
 
   serverUrl!: string;
@@ -29,6 +30,9 @@ export class AppComponent {
   commentInput: string = "";
 
   personalToken!: string;
+
+  hasAlreadySubmitted: boolean = false;
+  hasSubmitted: any;
 
   constructor(private _http: HttpClient, private _cookieService: CookieService) {
     if (isDevMode()) {
@@ -73,7 +77,20 @@ export class AppComponent {
         if (data.status === 200) {
           this.commentInput = '';
           this.moodInput = undefined;
+
+          this.hasSubmitted = true;
+
+          of(null).pipe(delay(10000)).subscribe(() => {
+            this.hasSubmitted = false;
+          });
         } else {
+          if (data.status === 409) {
+            this.hasAlreadySubmitted = true;
+
+            of(null).pipe(delay(10000)).subscribe(() => {
+              this.hasAlreadySubmitted = false;
+            });
+          }
           console.log(`Error ${data.status} received: ${data.statusText}`);
         }
       },
