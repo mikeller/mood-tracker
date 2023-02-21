@@ -1,0 +1,33 @@
+services:
+  ui:
+    build:
+      context: ui
+      dockerfile: Dockerfile-dev
+    restart: on-failure
+    depends_on:
+      - service
+    ports:
+      - 80:80
+
+  service:
+    build:
+      context: service
+    restart: on-failure
+    depends_on:
+      - db
+    networks:
+      - internal
+    ports:
+      - 8082:8080
+
+  db:
+    build:
+      context: db
+    restart: on-failure
+    networks:
+      internal:
+          aliases:
+            - dbhost
+
+networks:
+  internal: {}
