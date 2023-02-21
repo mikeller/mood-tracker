@@ -1,5 +1,5 @@
 services:
-  ui:
+  ui-dev:
     build:
       context: ui
       dockerfile: Dockerfile-dev
