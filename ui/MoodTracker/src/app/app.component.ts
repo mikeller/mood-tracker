@@ -15,6 +15,7 @@ import { delay, of } from 'rxjs';
 })
 
 export class AppComponent {
+
   title = 'Mood Tracker';
 
   readonly APP_URL = 'http://localhost:8082/';
@@ -210,5 +211,4 @@ export class AppComponent {
 
     this.moodResults = undefined;
   }
-
 }

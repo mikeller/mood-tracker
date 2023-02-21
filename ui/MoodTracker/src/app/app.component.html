@@ -4,14 +4,15 @@
 
   <div *ngIf="!moodResults">
     <div>
-      <tr *ngFor="let moodValue of moodValues | keyvalue: asIsOrder">
-        <td>{{ moodValue.value }}</td>
-        <td>
-          <input type="radio" name="radiogroup" 
-            [value]="moodValue.key" 
-            (change)="onMoodSelectionChange(moodValue.key)">
-        </td>
-      </tr>
+      <div><small class="text-info">What is your mood today?</small></div>
+      <div *ngFor="let moodValue of moodValues | keyvalue: asIsOrder">
+        <div class="row btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" [value]="moodValue.key"
+            (change)="onMoodSelectionChange(moodValue.key)" autocomplete="off">{{ moodValue.value }}
+            </label>
+          </div>
+      </div>
     </div>
 
     <div><small class="text-info">Comment:</small></div>
@@ -57,6 +58,7 @@
         </tr>
       </tbody>
     </table>
+
     <div><small class="text-info">Comments:</small></div>
     <tr *ngFor="let verbatim of moodResults.verbatims | keyvalue: asIsOrder">
       <div><small class="text-info">Mood: {{moodValues.get(verbatim.key)}}</small></div>

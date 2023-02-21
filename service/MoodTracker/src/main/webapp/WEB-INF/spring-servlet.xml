@@ -49,12 +49,6 @@
 		</property>
 	</bean>
 	
-<!--  	<bean id="moodDao" class="ch.ike.moodtracker.repository.MoodDaoImpl">
-		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	</bean>
-	<bean id="moodService" class="ch.ike.moodtracker.service.MoodServiceImpl">
-		<property name="moodDao" ref="moodDao"></property>
-	</bean> -->
 	<context:component-scan base-package="ch.ike.moodtracker" />
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
