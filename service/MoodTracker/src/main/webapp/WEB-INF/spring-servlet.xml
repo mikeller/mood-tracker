@@ -23,8 +23,10 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+<!-- 		<property name="url"
+			value="jdbc:mysql://localhost:3306/moodtracker" /> -->
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/moodtracker" />
+			value="jdbc:mysql://dbhost:3306/moodtracker" />
 		<property name="username" value="service" />
 		<property name="password" value="secret" />
 	</bean>

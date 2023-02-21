@@ -24,7 +24,9 @@ services:
       context: db
     restart: on-failure
     networks:
-      - internal
+      internal:
+          aliases:
+            - dbhost
 
 networks:
   internal: {}
