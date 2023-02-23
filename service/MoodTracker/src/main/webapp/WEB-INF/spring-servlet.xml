@@ -20,9 +20,9 @@
 	<mvc:annotation-driven />
 	<context:component-scan base-package="ch.ike.moodtracker" />
 	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 <!-- 		<property name="url"
 			value="jdbc:mysql://localhost:3306/moodtracker" /> -->
 		<property name="url"
@@ -32,8 +32,8 @@
 	</bean>
 
 	<!-- Hibernate 4 SessionFactory Bean definition -->
-	<bean id="hibernate4AnnotatedSessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="hibernate5AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
@@ -53,8 +53,8 @@
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />
 	</bean>
 
 </beans>
