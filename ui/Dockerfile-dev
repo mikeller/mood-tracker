@@ -1,4 +1,4 @@
-FROM node:18 as build
+FROM node:22 as build
 RUN npm install -g @angular/cli
 WORKDIR /opt/app
 COPY MoodTracker/package*.json ./
