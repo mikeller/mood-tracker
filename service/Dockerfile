@@ -5,5 +5,5 @@ RUN mvn dependency:resolve dependency:resolve-plugins
 COPY MoodTracker/src /opt/app/src
 RUN mvn clean package
 
-FROM tomcat:9
+FROM tomcat:10
 COPY --from=build /opt/app/target/ROOT.war /usr/local/tomcat/webapps/
