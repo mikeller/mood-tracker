@@ -9,3 +9,7 @@ updates:
     directory: "/ui/MoodTracker" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "maven" # See documentation for possible values
+    directory: "/service/MoodTracker" # Location of package manifests
+    schedule:
+      interval: "weekly"
