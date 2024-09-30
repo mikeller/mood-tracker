@@ -21,7 +21,7 @@
     "@angular/router": "^18.2.5",
     "angular2-uuid": "^1.1.1",
     "bootstrap": "^5.3.3",
-    "jquery": "^3.6.3",
+    "jquery": "^3.7.1",
     "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.7.0",
