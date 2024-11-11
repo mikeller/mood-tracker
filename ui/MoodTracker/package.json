@@ -17,7 +17,7 @@
     "@angular/core": "^15.2.10",
     "@angular/forms": "^18.2.10",
     "@angular/platform-browser": "^18.2.10",
-    "@angular/platform-browser-dynamic": "^18.2.10",
+    "@angular/platform-browser-dynamic": "^18.2.11",
     "@angular/router": "^18.2.8",
     "angular2-uuid": "^1.1.1",
     "bootstrap": "^5.3.3",
