@@ -1,4 +1,4 @@
-FROM maven:3.9.10 AS build
+FROM maven:3.9.11 AS build
 WORKDIR /opt/app
 COPY MoodTracker/pom.xml /opt/app/
 RUN mvn dependency:resolve dependency:resolve-plugins
