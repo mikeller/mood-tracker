@@ -1,4 +1,4 @@
-FROM mysql:9.6
+FROM mysql:9.7
 
 ENV MYSQL_ROOT_PASSWORD=super-secret
 
